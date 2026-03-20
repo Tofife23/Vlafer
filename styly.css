@@ -14,6 +14,23 @@ html {
     scroll-behavior: smooth;
 }
 
+:root {
+    --navbar-bg: rgba(255, 255, 255, 0.25);
+    --navbar-padding: 1rem;
+    --navbar-box-shadow: none;
+    --navbar-border: 1px solid rgba(255, 255, 255, 0.35);
+    --navbar-icon-height: 40px;
+    --navbar-main-logo-height: 52px;
+}
+
+.navbar-logo .navbar-icon {
+    max-height: 40px;
+}
+
+.navbar-logo .navbar-main-logo {
+    max-height: 52px;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
     color: #2d2d2d;
@@ -100,12 +117,18 @@ body {
    ========================================== */
 
 .navbar {
-    background: white;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    padding: 1rem 0;
+    background: var(--navbar-bg);
+    backdrop-filter: blur(7px);
+    border-bottom: var(--navbar-border);
+    box-shadow: var(--navbar-box-shadow);
+    padding: var(--navbar-padding) 0;
+    transition: background 0.3s ease, padding 0.3s ease, box-shadow 0.3s ease, border-bottom 0.3s ease;
 }
 
 .navbar.sticky {
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    padding: 0.75rem 0;
     position: sticky;
     top: 0;
     z-index: 50;
@@ -127,10 +150,34 @@ body {
     background-clip: text;
 }
 
+.navbar-logo a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .navbar-logo img {
-    height: 40px;
     width: auto;
     display: block;
+    transition: height 0.3s ease;
+}
+
+.navbar-logo .navbar-icon {
+    height: var(--navbar-icon-height);
+    transition: height 0.3s ease;
+}
+
+.navbar-logo .navbar-main-logo {
+    height: var(--navbar-main-logo-height);
+    transition: height 0.3s ease;
+}
+
+.navbar.sticky .navbar-icon {
+    height: 24px;
+}
+
+.navbar.sticky .navbar-main-logo {
+    height: 40px;
 }
 
 .navbar-menu {
@@ -164,21 +211,56 @@ body {
     opacity: 0.9;
 }
 
+/* Mobile: zvetsena navbar; top bar zůstává viditelná stále */
 @media (max-width: 768px) {
+    .navbar {
+        background: transparent;
+        padding: 1.25rem 0;
+        transition: background 0.3s ease-in-out, padding 0.3s ease-in-out;
+    }
+
+    .navbar.sticky {
+        background: white;
+        padding: 0.75rem 0;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .navbar-logo a {
+        gap: 10px;
+    }
+
+    .navbar-logo .navbar-icon {
+        height: 40px;
+    }
+
+    .navbar-logo .navbar-main-logo {
+        height: 52px;
+    }
+
+    .navbar.sticky .navbar-icon {
+        height: 24px;
+    }
+
+    .navbar.sticky .navbar-main-logo {
+        height: 40px;
+    }
+
     .navbar-menu {
         display: none;
     }
 
-    .navbar-content {
-        gap: 1rem;
-    }
-
-    .navbar-logo h1 {
-        font-size: 1.25rem;
-    }
-
-    .navbar-logo img {
-        height: 32px;
+    .navbar.show-menu .navbar-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        background: white;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        padding: 1rem;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        z-index: 40;
     }
 }
 
@@ -188,13 +270,20 @@ body {
 
 .hero {
     position: relative;
-    height: 400px;
+    height: 520px;
+    min-height: 520px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     color: white;
     overflow: hidden;
+    cursor: pointer;
+    transition: filter 0.3s ease;
+}
+
+.hero:hover {
+    filter: brightness(1.1);
 }
 
 @media (min-width: 768px) {
@@ -211,7 +300,27 @@ body {
     bottom: 0;
     background-size: cover;
     background-position: center;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.hero-background-front {
     z-index: 1;
+    opacity: 1;
+}
+
+.hero-background-back {
+    z-index: 0;
+    opacity: 0;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 2;
 }
 
 .hero-overlay {
@@ -433,6 +542,51 @@ body {
     .about-grid.reverse > * {
         direction: ltr;
     }
+}
+
+.about-grid.cakes {
+    background: linear-gradient(120deg, #ffffff 0%, #ffeaf2 45%, #f7c3de 100%);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+}
+
+.about-grid.cakes .about-text,
+.about-grid.cakes .about-image {
+    background: transparent;
+}
+
+.about-grid.cakes .about-text {
+    padding: 0.5rem;
+}
+
+.about-grid.bubble {
+    background: linear-gradient(120deg, #ffffff 0%, #e7f4ff 45%, #bbe7ff 100%);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+}
+
+.about-grid.bubble .about-text,
+.about-grid.bubble .about-image {
+    background: transparent;
+}
+
+.about-grid.bubble .about-text {
+    padding: 0.5rem;
+}
+
+.about-grid.icecream {
+    background: linear-gradient(120deg, #ffffff 0%, #fff5e8 45%, #ffdab0 100%);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+}
+
+.about-grid.icecream .about-text,
+.about-grid.icecream .about-image {
+    background: transparent;
+}
+
+.about-grid.icecream .about-text {
+    padding: 0.5rem;
 }
 
 .about-text h3 {

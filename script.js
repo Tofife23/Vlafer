@@ -25,15 +25,83 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // ==========================================
 
 const navbar = document.querySelector('.navbar');
-const topBar = document.querySelector('.top-bar');
 
 window.addEventListener('scroll', () => {
+    const maxScroll = 120;
+    const scrollValue = Math.min(window.scrollY, maxScroll);
+    const progress = scrollValue / maxScroll; // 0...1
+
+    // plynulý shrink (from rozm. start to sticky size)
+    const iconHeight = 40 - 16 * progress;            // 40px -> 24px
+    const mainLogoHeight = 52 - 12 * progress;        // 52px -> 40px
+    const navbarPadding = 1 - 0.25 * progress;        // 1rem -> 0.75rem
+    const opacity = 0.25 + 0.75 * progress;           // 0.25 -> 1
+
+    document.documentElement.style.setProperty('--navbar-icon-height', `${iconHeight}px`);
+    document.documentElement.style.setProperty('--navbar-main-logo-height', `${mainLogoHeight}px`);
+    document.documentElement.style.setProperty('--navbar-padding', `${navbarPadding}rem`);
+    document.documentElement.style.setProperty('--navbar-bg', `rgba(255,255,255,${opacity})`);
+    document.documentElement.style.setProperty('--navbar-border', `1px solid rgba(255,255,255,${Math.min(0.35 + 0.65 * progress, 1)})`);
+    document.documentElement.style.setProperty('--navbar-box-shadow', progress > 0.25 ? '0 2px 10px rgba(0,0,0,0.08)' : 'none');
+
     if (window.scrollY > 50) {
         navbar.classList.add('sticky');
     } else {
         navbar.classList.remove('sticky');
     }
 });
+
+// ==========================================
+// Hero Background Click-Slider with Auto-Slide
+// ==========================================
+
+const hero = document.querySelector('.hero');
+const heroFront = document.querySelector('.hero-background-front');
+const heroBack = document.querySelector('.hero-background-back');
+
+if (hero && heroFront && heroBack) {
+    const heroImages = [
+        'img/dorty-125.jpg',
+        'img/stanek.jpg',
+        
+    ];
+    let heroIndex = 0;
+    let autoSlideInterval;
+    let activeFront = true;
+
+    const changeImage = () => {
+        const nextIndex = (heroIndex + 1) % heroImages.length;
+        const currentEl = activeFront ? heroFront : heroBack;
+        const nextEl = activeFront ? heroBack : heroFront;
+
+        nextEl.style.backgroundImage = `url('${heroImages[nextIndex]}')`;
+        nextEl.style.opacity = '1';
+        currentEl.style.opacity = '0';
+
+        setTimeout(() => {
+            activeFront = !activeFront;
+            heroIndex = nextIndex;
+        }, 500);
+    };
+
+    const startAutoSlide = () => {
+        autoSlideInterval = setInterval(changeImage, 5000);
+    };
+
+    const stopAutoSlide = () => {
+        clearInterval(autoSlideInterval);
+    };
+
+    // Start auto-slide
+    startAutoSlide();
+
+    // Click to change image and reset auto-slide
+    hero.addEventListener('click', () => {
+        changeImage();
+        stopAutoSlide();
+        startAutoSlide();
+    });
+}
 
 // ==========================================
 // Intersection Observer for Animations
@@ -247,7 +315,23 @@ window.addEventListener('scroll', debounce(() => {
     // Scroll event handler
 }, 100));
 
-// Check for form submission success
-if (window.location.search.includes('submitted=true')) {
-    document.getElementById('form-success').style.display = 'block';
-}
+// Handle contact form submission
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    fetch(this.action, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (response.ok) {
+            document.getElementById('form-success').style.display = 'block';
+            this.reset(); // Clear the form
+        } else {
+            alert('Chyba při odesílání formuláře.');
+        }
+    })
+    .catch(error => {
+        alert('Chyba při odesílání formuláře.');
+    });
+});
