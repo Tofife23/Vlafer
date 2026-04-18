@@ -196,6 +196,26 @@ body {
     color: #E94B83;
 }
 
+.navbar-link.back-btn {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, #E94B83 0%, #F2A900 100%);
+    color: white !important;
+    border-radius: 0.5rem;
+}
+
+.navbar-link.back-btn:hover {
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .navbar-link.back-btn {
+        display: inline-flex;
+    }
+}
+
 .navbar-button {
     background: linear-gradient(135deg, #E94B83 0%, #F2A900 100%);
     color: white;
