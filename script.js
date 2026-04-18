@@ -63,7 +63,7 @@ if (hero && heroFront && heroBack) {
     const heroImages = [
         'img/dorty-125.jpg',
         'img/stanek.jpg',
-        
+        'img/zakusky6.png'
     ];
     let heroIndex = 0;
     let autoSlideInterval;
