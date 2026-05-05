@@ -379,6 +379,20 @@ body {
     padding: 2rem;
 }
 
+.hero-logo {
+    display: block;
+    max-width: 320px;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .hero-logo {
+        max-width: 420px;
+    }
+}
+
 .hero-title {
     font-size: 2rem;
     font-weight: 800;
