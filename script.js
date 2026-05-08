@@ -316,7 +316,10 @@ window.addEventListener('scroll', debounce(() => {
 }, 100));
 
 // Handle contact form submission
-document.getElementById('contact-form').addEventListener('submit', function(e) {
+const contactForm = document.getElementById('contact-form');
+
+if (contactForm) {
+contactForm.addEventListener('submit', function(e) {
     e.preventDefault();
     const formData = new FormData(this);
     fetch(this.action, {
@@ -335,3 +338,60 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
         alert('Chyba při odesílání formuláře.');
     });
 });
+}
+
+// ==========================================
+// Modal - Image Zoom on Click
+// ==========================================
+
+const modal = document.getElementById('imageModal');
+const modalImg = document.querySelector('.modal-image');
+const modalClose = document.querySelector('.modal-close');
+const productCards = document.querySelectorAll('.product-card');
+
+if (modal && modalImg && modalClose && productCards.length) {
+const closeModal = () => {
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden', 'true');
+    modalImg.src = '';
+    document.body.style.overflow = 'auto'; // Re-enable scrolling
+};
+
+// Open modal when clicking on product card
+productCards.forEach(card => {
+    card.addEventListener('click', function() {
+        const image = this.querySelector('.product-image');
+        const bgImage = image ? image.style.backgroundImage : '';
+        if (bgImage) {
+            // Extract URL from backgroundImage using regex
+            const urlMatch = bgImage.match(/url\(['"]?([^'")]+)['"]?\)/);
+            if (urlMatch && urlMatch[1]) {
+                modalImg.src = urlMatch[1];
+                modalImg.alt = this.querySelector('h3')?.textContent || '';
+                modal.classList.add('show');
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            }
+        }
+    });
+});
+
+// Close modal when clicking the X button
+modalClose.addEventListener('click', function() {
+    closeModal();
+});
+
+// Close modal when clicking outside the image
+modal.addEventListener('click', function(e) {
+    if (e.target === modal) {
+        closeModal();
+    }
+});
+
+// Close modal on ESC key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.classList.contains('show')) {
+        closeModal();
+    }
+});
+}
