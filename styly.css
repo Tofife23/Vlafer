@@ -768,21 +768,27 @@ body {
     border-radius: 1.5rem;
     padding: 2rem;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-top: 4px solid #999;
 }
 
 .quality-icon {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #E94B83 0%, #F2A900 100%);
+    background: #f0f0f0;
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 1rem;
-    font-size: 1.75rem;
+    font-size: 2.5rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.quality-card:hover .quality-icon {
+    transform: scale(1.1) rotate(5deg);
 }
 
 .quality-card h3 {
@@ -790,6 +796,73 @@ body {
     font-weight: 700;
     color: #2d2d2d;
     margin-bottom: 0.75rem;
+    position: relative;
+    padding-bottom: 0.75rem;
+}
+
+.quality-card h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background: #999;
+    border-radius: 2px;
+}
+
+/* Color Variants */
+
+.quality-card:nth-child(1) {
+    border-top-color: #6BAA7C;
+}
+
+.quality-card:nth-child(1) .quality-icon {
+    background: #D5F1E8;
+    color: #6BAA7C;
+}
+
+.quality-card:nth-child(1) h3 {
+    color: #6BAA7C;
+}
+
+.quality-card:nth-child(1) h3::after {
+    background: #D5F1E8;
+}
+
+.quality-card:nth-child(2) {
+    border-top-color: #E874A4;
+}
+
+.quality-card:nth-child(2) .quality-icon {
+    background: #F5D7E8;
+    color: #E874A4;
+}
+
+.quality-card:nth-child(2) h3 {
+    color: #E874A4;
+}
+
+.quality-card:nth-child(2) h3::after {
+    background: #F5D7E8;
+}
+
+.quality-card:nth-child(3) {
+    border-top-color: #E8933F;
+}
+
+.quality-card:nth-child(3) .quality-icon {
+    background: #F7E3D1;
+    color: #E8933F;
+}
+
+.quality-card:nth-child(3) h3 {
+    color: #E8933F;
+}
+
+.quality-card:nth-child(3) h3::after {
+    background: #F7E3D1;
 }
 
 .quality-card p {
@@ -1102,7 +1175,7 @@ body {
     width: 100%;
     height: 100%;
     background-size: cover;
-    background-position: center;
+    background-position: center top;
 }
 
 .product-info {
