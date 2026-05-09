@@ -358,17 +358,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 2;
-}
-
-.hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.25);
     z-index: 2;
 }
 
@@ -551,6 +541,14 @@ body {
     background-position: center;
 }
 
+.offer-grid .offer-card:nth-child(1) .offer-image {
+    background-position: center 18%;
+}
+
+.offer-grid .offer-card:nth-child(3) .offer-image {
+    background-position: center 25%;
+}
+
 .offer-content {
     padding: 1.5rem;
     display: flex;
@@ -730,6 +728,9 @@ body {
 }
 
 .about-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 1.5rem;
     overflow: hidden;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
@@ -737,8 +738,15 @@ body {
 
 .about-image img {
     width: 100%;
-    height: auto;
+    max-width: 520px;
+    height: 360px;
+    object-fit: cover;
     display: block;
+}
+
+.about-grid.bubble .about-image img,
+.about-grid.icecream .about-image img {
+    object-position: center 25%;
 }
 
 /* ==========================================
