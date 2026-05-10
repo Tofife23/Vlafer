@@ -61,14 +61,19 @@ const heroBack = document.querySelector('.hero-background-back');
 
 if (hero && heroFront && heroBack) {
     const heroImages = [
-        'img/dorty-125.jpg',
+        'img/vkrtecek.webp',
+        'img/dorty-171.jpg',
         'img/stanek.jpg',
         'img/zakusky6.png',
-        'img/dorty-171.jpg'
+        'img/dorty-125.jpg'
     ];
     let heroIndex = 0;
     let autoSlideInterval;
     let activeFront = true;
+
+    // Synchronize the initial hero backgrounds with the JS slide order
+    heroFront.style.backgroundImage = `url('${heroImages[0]}')`;
+    heroBack.style.backgroundImage = `url('${heroImages[1]}')`;
 
     const changeImage = () => {
         const nextIndex = (heroIndex + 1) % heroImages.length;
