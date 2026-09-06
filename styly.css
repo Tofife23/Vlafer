@@ -60,6 +60,20 @@ body {
    Top Bar
    ========================================== */
 
+.announcement-bar {
+    background: linear-gradient(90deg, #E94B83 0%, #F2A900 100%);
+    color: white;
+    padding: 0.5rem 0;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.announcement-bar p {
+    margin: 0;
+}
+
+
 .top-bar {
     background: linear-gradient(135deg, #E94B83 0%, #F2A900 100%);
     color: white;
